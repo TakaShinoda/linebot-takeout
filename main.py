@@ -44,7 +44,7 @@ def handle_message(event):
 def handle_follow(event):
    line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text='友達追加ありがとう'))
+       TextSendMessage(text='友達追加ありがとう!'))
 
 
 if __name__ == "__main__":
