@@ -72,9 +72,7 @@ def search_shop(lat, lng):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
 
-   line_bot_api.reply_message(
-       event.reply_token,
-       TextSendMessage(text=event.message.latitude))
+   
 
 
    # 空のリストを作成
@@ -84,6 +82,10 @@ def handle_location_message(event):
    user_lat = event.message.latitude
    user_longit = event.message.longitude
    shop_result = search_shop(user_lat, user_longit)
+
+   line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=user_lat))
 
    
 
