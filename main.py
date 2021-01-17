@@ -139,11 +139,15 @@ def handle_follow(event):
        TextSendMessage(text='友達追加ありがとう!'))
 
  #テキスト返しプログラム 
-# @handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#    line_bot_api.reply_message(
-#        event.reply_token,
-#        TextSendMessage(text='位置情報を送ってね!'))
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+   user_lat = event.message.latitude
+   user_longit = event.message.longitude
+   shop_result = search_shop(user_lat, user_longit)
+
+   line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=shop_result))
 
 
 if __name__ == "__main__":
