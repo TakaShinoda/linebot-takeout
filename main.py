@@ -46,7 +46,8 @@ def callback():
 
  #ホットペッパー検索 
 def search_shop(lat, lng):
-   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+   # url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
    params = {}
    params['key'] = YOUR_HOTPEPPER_API
    params['lat'] = lat
