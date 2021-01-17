@@ -71,6 +71,12 @@ def search_shop(lat, lng):
  #メイン処理
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
+
+   ine_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=event.message.latitude))
+
+
    # 空のリストを作成
    list = []
 
