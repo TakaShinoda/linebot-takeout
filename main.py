@@ -138,6 +138,13 @@ def handle_follow(event):
        event.reply_token,
        TextSendMessage(text='友達追加ありがとう!'))
 
+ #オウム返しプログラム 
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+   line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text='位置情報を送ってね!'))
+
 
 if __name__ == "__main__":
    port = int(os.getenv("PORT"))
