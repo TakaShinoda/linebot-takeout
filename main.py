@@ -30,10 +30,7 @@ DAMMY_URL = "https://i.pinimg.com/originals/6f/d8/5d/6fd85d362e61b473a9debc7ef78
  #テスト用
 @app.route("/")
 def hello_world():
-   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
-   response = requests.get(url)
-   results = response.json()
-   return results
+   return "hello world!"
 
  #Webhookからのリクエストをチェック 
 @app.route("/callback", methods=['POST'])
@@ -58,8 +55,7 @@ def search_shop(lat, lng):
    params['keyword'] = "テイクアウト"
    params['lunch'] = 1
    params['order'] = 4
-   # response = requests.get(url, params)
-   response = requests.get(url)
+   response = requests.get(url, params)
    results = response.json()
    
    if "error" in results:
@@ -67,8 +63,8 @@ def search_shop(lat, lng):
            raise Exception("{}".format(results["message"]))
        else:
            raise Exception(DEF_ERR_MESSAGE)
-   total_hit_count = results.get("total_hit_count", 0)
-   if total_hit_count < 1:
+   results_returned = results.get("results_returned", 0)
+   if results_returned < 1:
        raise Exception(no_hit_message)
    return results
 
