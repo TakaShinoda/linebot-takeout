@@ -57,11 +57,6 @@ def search_shop(lat, lng):
    params['order'] = 4
    response = requests.get(url, params)
    results = response.json()
-
-   line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=results))
-
    
 
 
