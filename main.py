@@ -72,7 +72,7 @@ def search_shop(lat, lng):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
 
-   ine_bot_api.reply_message(
+   line_bot_api.reply_message(
        event.reply_token,
        TextSendMessage(text=event.message.latitude))
 
