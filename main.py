@@ -30,7 +30,10 @@ DAMMY_URL = "https://i.pinimg.com/originals/6f/d8/5d/6fd85d362e61b473a9debc7ef78
  #テスト用
 @app.route("/")
 def hello_world():
-   return "hello world!"
+   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
+   response = requests.get(url)
+   results = response.json()
+   return results
 
  #Webhookからのリクエストをチェック 
 @app.route("/callback", methods=['POST'])
@@ -145,16 +148,9 @@ def handle_follow(event):
  #テキスト返しプログラム 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
-   response = requests.get(url)
-   results = response.json()
-
-
-
-
    line_bot_api.reply_message(
        event.reply_token,
-       TextSendMessage(text=results))
+       TextSendMessage(text='位置情報を送ってね!'))
 
 
 if __name__ == "__main__":
