@@ -129,7 +129,7 @@ def handle_location_message(event):
        alt_text="お近くのテイクアウト可能なお店について連絡しました。",
        template=CarouselTemplate(columns=columns),
    )
-   line_bot_api.reply_message(event.reply_token, TextSendMessage(text=shop_result))
+   line_bot_api.reply_message(event.reply_token, TextSendMessage(text='test'))
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
