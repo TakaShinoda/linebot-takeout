@@ -57,6 +57,12 @@ def search_shop(lat, lng):
    params['order'] = 4
    response = requests.get(url, params)
    results = response.json()
+
+   line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=results))
+
+
    if "error" in results:
        if "message" in results:
            raise Exception("{}".format(results["message"]))
@@ -71,12 +77,12 @@ def search_shop(lat, lng):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
    # 空のリストを作成
-   # list = []
+   list = []
 
-   # # LINEからの位置情報で緯度と経度を受け取る
-   # user_lat = event.message.latitude
-   # user_longit = event.message.longitude
-   # shop_result = search_shop(user_lat, user_longit)
+   # LINEからの位置情報で緯度と経度を受け取る
+   user_lat = event.message.latitude
+   user_longit = event.message.longitude
+   shop_result = search_shop(user_lat, user_longit)
 
    # for shop in shop_result.get("shop"):
    #    # 店舗画像
@@ -130,9 +136,10 @@ def handle_location_message(event):
    #     template=CarouselTemplate(columns=columns),
    # )
    # line_bot_api.reply_message(event.reply_token, messages=messages)
-   line_bot_api.reply_message(
-       event.reply_token,
-       TextSendMessage(text='位置情報'))
+
+   # line_bot_api.reply_message(
+   #     event.reply_token,
+   #     TextSendMessage(text='位置情報'))
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
