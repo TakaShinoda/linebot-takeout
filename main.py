@@ -77,8 +77,6 @@ def handle_location_message(event):
    user_lat = event.message.latitude
    user_longit = event.message.longitude
    shop_result = search_shop(user_lat, user_longit)
-   line_bot_api.reply_message(event.reply_token, messages=shop_result)
-
 
    for shop in shop_result.get("shop"):
       # 店舗画像
@@ -131,7 +129,7 @@ def handle_location_message(event):
        alt_text="お近くのテイクアウト可能なお店について連絡しました。",
        template=CarouselTemplate(columns=columns),
    )
-   line_bot_api.reply_message(event.reply_token, messages=messages)
+   line_bot_api.reply_message(event.reply_token, TextSendMessage(text=shop_result))
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
