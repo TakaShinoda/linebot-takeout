@@ -46,7 +46,7 @@ def callback():
 
  #ホットペッパー検索 
 def search_shop(lat, lng):
-   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?"
+   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
    params = {}
    params['key'] = YOUR_HOTPEPPER_API
    params['lat'] = lat
@@ -125,11 +125,11 @@ def handle_location_message(event):
        for column in list
    ]
 
-   messages = TemplateSendMessage(
-       alt_text="お近くのテイクアウト可能なお店について連絡しました。",
-       template=CarouselTemplate(columns=columns),
-   )
-   line_bot_api.reply_message(event.reply_token, messages=messages)
+   # messages = TemplateSendMessage(
+   #     alt_text="お近くのテイクアウト可能なお店について連絡しました。",
+   #     template=CarouselTemplate(columns=columns),
+   # )
+   line_bot_api.reply_message(event.reply_token, messages=shop_result)
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
