@@ -125,11 +125,11 @@ def handle_location_message(event):
        for column in list
    ]
 
-   # messages = TemplateSendMessage(
-   #     alt_text="お近くのテイクアウト可能なお店について連絡しました。",
-   #     template=CarouselTemplate(columns=columns),
-   # )
-   line_bot_api.reply_message(event.reply_token, messages=shop_result)
+   messages = TemplateSendMessage(
+       alt_text="お近くのテイクアウト可能なお店について連絡しました。",
+       template=CarouselTemplate(columns=columns),
+   )
+   line_bot_api.reply_message(event.reply_token, messages=messages)
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
@@ -147,5 +147,5 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-   port = int(os.getenv("PORT"))
+   port = int(os.getenv("PORT", 5000))
    app.run(host="0.0.0.0", port=port)
