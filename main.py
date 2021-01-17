@@ -45,10 +45,8 @@ def callback():
    return 'OK'
 
  #ホットペッパー検索 
-# def search_shop(lat, lng):
-def search_shop():
-   # url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
-   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
+def search_shop(lat, lng):
+   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
    params = {}
    params['key'] = YOUR_HOTPEPPER_API
    params['lat'] = lat
@@ -61,8 +59,6 @@ def search_shop():
    response = requests.get(url)
    results = response.json()
    
-
-
    if "error" in results:
        if "message" in results:
            raise Exception("{}".format(results["message"]))
@@ -82,8 +78,7 @@ def handle_location_message(event):
    # LINEからの位置情報で緯度と経度を受け取る
    user_lat = event.message.latitude
    user_longit = event.message.longitude
-   # shop_result = search_shop(user_lat, user_longit)
-   shop_result = search_shop()
+   shop_result = search_shop(user_lat, user_longit)
 
    
 
@@ -148,11 +143,18 @@ def handle_follow(event):
        TextSendMessage(text='友達追加ありがとう!'))
 
  #テキスト返しプログラム 
-# @handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#    line_bot_api.reply_message(
-#        event.reply_token,
-#        TextSendMessage(text='位置情報を送ってね!'))
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=テイクアウト&lunch=1"
+   response = requests.get(url)
+   results = response.json()
+
+
+
+
+   line_bot_api.reply_message(
+       event.reply_token,
+       TextSendMessage(text=results))
 
 
 if __name__ == "__main__":
