@@ -76,60 +76,60 @@ def handle_location_message(event):
    # LINEからの位置情報で緯度と経度を受け取る
    user_lat = event.message.latitude
    user_longit = event.message.longitude
-   # shop_result = search_shop(user_lat, user_longit)
+   shop_result = search_shop(user_lat, user_longit)
 
-   # for shop in shop_result.get("shop"):
-   #    # 店舗画像
-   #     photo = shop.get("photo", {})
-   #     pc = photo.get("pc", {})
-   #     l = pc.get("l", "")
-   #     if l == "":
-   #         l = DAMMY_URL
-   #    # 掲載店名
-   #     name = shop.get("name", "")
-   #    # 店舗URL
-   #     urls = shop.get("urls", "")
-   #    #  PR文
-   #     catch = shop.get("catch", "")
-   #    #  pr_short = "以下、内容\n" + pr.get("pr_short", "")
-   #    #  if len(pr_short) >= 60:
-   #    #      pr_short = pr_short[:56] + "…"
-   #    #  携帯用交通アクセス
-   #    #  mobile_access = shop.get("mobile_access", "")
+   for shop in shop_result.get("shop"):
+      # 店舗画像
+       photo = shop.get("photo", {})
+       pc = photo.get("pc", {})
+       l = pc.get("l", "")
+       if l == "":
+           l = DAMMY_URL
+      # 掲載店名
+       name = shop.get("name", "")
+      # 店舗URL
+       urls = shop.get("urls", "")
+      #  PR文
+       catch = shop.get("catch", "")
+      #  pr_short = "以下、内容\n" + pr.get("pr_short", "")
+      #  if len(pr_short) >= 60:
+      #      pr_short = pr_short[:56] + "…"
+      #  携帯用交通アクセス
+      #  mobile_access = shop.get("mobile_access", "")
    
    
-   #     result_dict = {
-   #             "thumbnail_image_url": l,
-   #             "title": name,
-   #             "text": catch,
-   #             "actions": {
-   #                 "label": "ホットペッパーで見る",
-   #                 "uri": urls
-   #             }
-   #         }
-   #     list.append(result_dict)
-   # print(list)
+       result_dict = {
+               "thumbnail_image_url": l,
+               "title": name,
+               "text": catch,
+               "actions": {
+                   "label": "ホットペッパーで見る",
+                   "uri": urls
+               }
+           }
+       list.append(result_dict)
+   print(list)
 
-   # columns = [
-   #     CarouselColumn(
-   #         thumbnail_image_url=column["thumbnail_image_url"],
-   #         title=column["title"],
-   #         text=column["text"],
-   #         actions=[
-   #             URITemplateAction(
-   #                 label=column["actions"]["label"],
-   #                 uri=column["actions"]["uri"],
-   #             )
-   #         ]
-   #     )
-   #     for column in list
-   # ]
+   columns = [
+       CarouselColumn(
+           thumbnail_image_url=column["thumbnail_image_url"],
+           title=column["title"],
+           text=column["text"],
+           actions=[
+               URITemplateAction(
+                   label=column["actions"]["label"],
+                   uri=column["actions"]["uri"],
+               )
+           ]
+       )
+       for column in list
+   ]
 
-   # messages = TemplateSendMessage(
-   #     alt_text="お近くのテイクアウト可能なお店について連絡しました。",
-   #     template=CarouselTemplate(columns=columns),
+   messages = TemplateSendMessage(
+       alt_text="お近くのテイクアウト可能なお店について連絡しました。",
+       template=CarouselTemplate(columns=columns),
    )
-   line_bot_api.reply_message(event.reply_token, messages=user_lat)
+   line_bot_api.reply_message(event.reply_token, messages=messages)
 
  #友達追加時イベント 
 @handler.add(FollowEvent)
