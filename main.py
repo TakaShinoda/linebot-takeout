@@ -46,7 +46,7 @@ def callback():
 
  #ホットペッパー検索 
 def search_shop(lat, lng):
-   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?"
+   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
    params = {}
    params['key'] = YOUR_HOTPEPPER_API
    params['lat'] = lat
@@ -55,7 +55,8 @@ def search_shop(lat, lng):
    params['keyword'] = "テイクアウト"
    params['lunch'] = 1
    params['order'] = 4
-   response = requests.get(url, params)
+   # response = requests.get(url, params)
+   response = requests.get(url)
    results = response.json()
    
 
