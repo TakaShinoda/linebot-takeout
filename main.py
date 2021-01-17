@@ -139,11 +139,11 @@ def handle_follow(event):
        TextSendMessage(text='友達追加ありがとう!'))
 
  #テキスト返しプログラム 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-   line_bot_api.reply_message(
-       event.reply_token,
-       TextSendMessage(text='位置情報を送ってね!'))
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#    line_bot_api.reply_message(
+#        event.reply_token,
+#        TextSendMessage(text='位置情報を送ってね!'))
 
 
 if __name__ == "__main__":
