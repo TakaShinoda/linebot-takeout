@@ -47,20 +47,17 @@ def callback():
 
  #ホットペッパー検索 
 def search_shop(lat, lng):
-   # url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
-   response = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=%E3%83%86%E3%82%A4%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88&lunch=1"
-   # params = {}
-   # params['key'] = YOUR_HOTPEPPER_API
-   # params['lat'] = lat
-   # params['lng'] = lng
-   # params['range'] = 3
-   # params['keyword'] = "テイクアウト"
-   # params['lunch'] = 1
-   # params['order'] = 4
-   # response = requests.get(url, params)
-
+   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+   params = {}
+   params['key'] = YOUR_HOTPEPPER_API
+   params['lat'] = lat
+   params['lng'] = lng
+   params['range'] = 3
+   params['keyword'] = "テイクアウト"
+   params['lunch'] = 1
+   params['order'] = 4
+   response = requests.get(url, params)
    # results = response.json()
-   
    xml = ET.parse(response)
    results = xml.getroot()
 
@@ -87,19 +84,21 @@ def handle_location_message(event):
    user_longit = event.message.longitude
    shop_result = search_shop(user_lat, user_longit)
 
-   for shop in shop_result.iter("shop"):
+   # shop_resultをjsonに変換したい
+
+   for shop in shop_result.get("shop"):
       # 店舗画像
-       photo = shop.text("photo")
-       pc = photo.text("pc")
-       l = pc.text("l")
+       photo = shop.get("photo", {})
+       pc = photo.get("pc", {})
+       l = pc.get("l", "")
        if l == "":
            l = DAMMY_URL
       # 掲載店名
-       name = shop.text("name")
+       name = shop.get("name", "")
       # 店舗URL
-       urls = shop.text("urls")
+       urls = shop.get("urls", "")
       #  PR文
-       catch = shop.text("catch")
+       catch = shop.get("catch", "")
       #  pr_short = "以下、内容\n" + pr.get("pr_short", "")
       #  if len(pr_short) >= 60:
       #      pr_short = pr_short[:56] + "…"
