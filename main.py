@@ -86,17 +86,17 @@ def handle_location_message(event):
 
    for shop in shop_result.iter("shop"):
       # 店舗画像
-       photo = shop.iter("photo")
-       pc = photo.iter("pc")
-       l = pc.iter("l")
+       photo = shop.text("photo")
+       pc = photo.text("pc")
+       l = pc.text("l")
        if l == "":
            l = DAMMY_URL
       # 掲載店名
-       name = shop.iter("name")
+       name = shop.text("name")
       # 店舗URL
-       urls = shop.iter("urls")
+       urls = shop.text("urls")
       #  PR文
-       catch = shop.iter("catch")
+       catch = shop.text("catch")
       #  pr_short = "以下、内容\n" + pr.get("pr_short", "")
       #  if len(pr_short) >= 60:
       #      pr_short = pr_short[:56] + "…"
