@@ -11,6 +11,7 @@ from linebot.models import (
 )
 import requests
 import urllib.parse
+import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 
@@ -56,7 +57,9 @@ def search_shop(lat, lng):
    params['lunch'] = 1
    params['order'] = 4
    response = requests.get(url, params)
-   results = response.json()
+   # results = response.json()
+   results = ET.parse(response).getroot()
+
    
    if "error" in results:
        if "message" in results:
@@ -72,9 +75,6 @@ def search_shop(lat, lng):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
 
-   
-
-
    # 空のリストを作成
    list = []
 
@@ -83,25 +83,19 @@ def handle_location_message(event):
    user_longit = event.message.longitude
    shop_result = search_shop(user_lat, user_longit)
 
-   line_bot_api.reply_message(
-       event.reply_token,
-       TextSendMessage(text=user_lat))
-
-   
-
-   for shop in shop_result.get("shop"):
+   for shop in shop_result.iter("shop"):
       # 店舗画像
-       photo = shop.get("photo", {})
-       pc = photo.get("pc", {})
-       l = pc.get("l", "")
+       photo = shop.iter("photo", {})
+       pc = photo.iter("pc", {})
+       l = pc.iter("l", "")
        if l == "":
            l = DAMMY_URL
       # 掲載店名
-       name = shop.get("name", "")
+       name = shop.iter("name", "")
       # 店舗URL
-       urls = shop.get("urls", "")
+       urls = shop.iter("urls", "")
       #  PR文
-       catch = shop.get("catch", "")
+       catch = shop.iter("catch", "")
       #  pr_short = "以下、内容\n" + pr.get("pr_short", "")
       #  if len(pr_short) >= 60:
       #      pr_short = pr_short[:56] + "…"
