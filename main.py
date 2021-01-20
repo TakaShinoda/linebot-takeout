@@ -31,20 +31,8 @@ DAMMY_URL = "https://i.pinimg.com/originals/6f/d8/5d/6fd85d362e61b473a9debc7ef78
  #テスト用
 @app.route("/")
 def hello_world():
-   url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
-   params = {}
-   params['key'] = YOUR_HOTPEPPER_API
-   params['lat'] = 35.69
-   params['lng'] = 139.69
-   params['range'] = 3
-   params['keyword'] = "テイクアウト"
-   params['lunch'] = 1
-   params['order'] = 4
-   response = requests.get(url, params)
-   # results = response.json()
-   xml = ET.parse(response)
-   results = xml.getroot()
-   return results
+   url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=%E3%83%86%E3%82%A4%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88&lunch=1"
+   return url
 
  #Webhookからのリクエストをチェック 
 @app.route("/callback", methods=['POST'])
