@@ -32,7 +32,11 @@ DAMMY_URL = "https://i.pinimg.com/originals/6f/d8/5d/6fd85d362e61b473a9debc7ef78
 @app.route("/")
 def hello_world():
    url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=f02ac1e80698a8b0&lat=35.69&lng=139.69&range=3&order=4&keyword=%E3%83%86%E3%82%A4%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88&lunch=1"
-   return url
+
+   response = requests.get(url)
+   xml = ET.parse(response)
+   results = xml.getroot()
+   return results
 
  #Webhookからのリクエストをチェック 
 @app.route("/callback", methods=['POST'])
